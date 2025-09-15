@@ -1,6 +1,6 @@
 "use client"
 
-import { getSingleNote } from '@/lib/api';
+import { getSingleNote } from '@/lib/api/api';
 import Modal from '@/components/Modal/Modal';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';

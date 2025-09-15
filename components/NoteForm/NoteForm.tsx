@@ -1,20 +1,15 @@
 'use client'
 
-// import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { NoteFormValues, NoteTag } from "../../types/note";
-import { createNote } from "@/lib/api";
+import { createNote } from "@/lib/api/api";
 import css from "./NoteForm.module.css";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 // 1. Імпортуємо хук
 import { useDraftStore } from "@/lib/store/noteStore";
-
-// interface NoteFormProps {
-//   onClose: () => void;
-// }
 
 export default function NoteForm() {
   const Id = useId();
@@ -48,14 +43,11 @@ export default function NoteForm() {
   });
 
   const handleSubmit = async (formData: FormData) => {
-    // console.log(formData);
     const values: NoteFormValues = {
       title: formData.get('title') as string,
       content: formData.get('content') as string,
       tag: formData.get('tag') as NoteTag
     }
-    // onSubmit(values);
-    // actions.resetForm();
     try {
       await Schema.validate(values, { abortEarly: false });
       await request.mutateAsync(values);
@@ -66,7 +58,6 @@ export default function NoteForm() {
         toast.error('Failed to create note. Please try again.');
       }
     }
-    // request.mutate(values);
   };
 
   const client = useQueryClient();
@@ -76,9 +67,6 @@ export default function NoteForm() {
     // 5. При успішному створенні нотатки очищуємо чернетку
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["notes"] });
-      // onClose();
-      // console.log('successfully created note');
-      // alert('successfully created note')
       toast.success('successfully created note')
       clearDraft();
       router.back();
@@ -89,11 +77,6 @@ export default function NoteForm() {
   // щоб задати початкове значення із чернетки 
   // та при зміні оновити чернетку в сторіоновити чернетку в сторі
   return (
-    // <Formik
-    //   initialValues={initialValues}
-    //   onSubmit={handleSubmit}
-    //   validationSchema={Schema}
-    // >
     <form action={handleSubmit} className={css.form}>
       <div className={css.formGroup}>
         <label htmlFor={`${Id}title`}>Title</label>
@@ -106,7 +89,6 @@ export default function NoteForm() {
           onChange={handleChange}
           required
         />
-        {/* <ErrorMessage component="span" name="title" className={css.error} /> */}
       </div>
 
       <div className={css.formGroup}>
@@ -119,7 +101,6 @@ export default function NoteForm() {
           defaultValue={draft.content}
           onChange={handleChange}
         />
-        {/* <ErrorMessage component="span" name="content" className={css.error} /> */}
       </div>
 
       <div className={css.formGroup}>
@@ -137,7 +118,6 @@ export default function NoteForm() {
           <option value="Meeting">Meeting</option>
           <option value="Shopping">Shopping</option>
         </select>
-        {/* <ErrorMessage component="span" name="tag" className={css.error} /> */}
       </div>
 
       <div className={css.actions}>
@@ -149,6 +129,5 @@ export default function NoteForm() {
         </button>
       </div>
     </form>
-    // </Formik>
   );
 }

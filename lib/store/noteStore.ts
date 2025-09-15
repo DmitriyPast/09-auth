@@ -36,7 +36,3 @@ export const useDraftStore = create<DraftStore>()(
         }
     )
 );
-
-// export const [draft, setDraft] = useState<NoteDraft>(initialDraft)
-
-// export const clearDraft = () => setDraft(initialDraft)

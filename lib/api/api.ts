@@ -1,9 +1,13 @@
 import axios from "axios";
-import type { Note, NoteFormValues, NoteTag } from "../types/note";
 
-// const myKey = import.meta.env.VITE_TMDB_TOKEN;
+export const nextServer = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL + '/api',
+    withCredentials: true, // дозволяє axios працювати з cookie
+})
+
+import type { Note, NoteFormValues, NoteTag } from "../../types/note";
+
 const ApiKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-// console.log(myKey);
 
 export interface FetchNotesResponse {
     notes: Note[];
