@@ -1,5 +1,6 @@
 'use client'
 
+import { User, UserAuthRequest } from "@/types/user";
 // import axios from "axios";
 import type { Note, NoteFormValues, NoteTag } from "../../types/note";
 import { nextServer } from "./api";
@@ -9,20 +10,20 @@ export interface FetchNotesResponse {
     totalPages: number;
 }
 
-export type UserAuthRequest = {
-    email: string;
-    password: string;
-    userName?: string;
-}
+// export type UserAuthRequest = {
+//     email: string;
+//     password: string;
+//     userName?: string;
+// }
 
-export type User = {
-    // id: string;
-    email: string;
-    username?: string;
-    avatar?: string;
-    // createdAt: Date;
-    // updatedAt: Date;
-}
+// export type User = {
+//     // id: string;
+//     email: string;
+//     username?: string;
+//     avatar?: string;
+//     // createdAt: Date;
+//     // updatedAt: Date;
+// }
 
 export type CheckSessionRequest = {
     success: boolean;
@@ -52,7 +53,7 @@ export async function getUser(): Promise<User> {
     return (await nextServer.get('/users/me')).data;
 }
 
-export async function editUser(user: User): Promise<User> {
+export async function editUser(user: { username: string }): Promise<User> {
     return (await nextServer.patch('/users/me', user)).data;
 }
 

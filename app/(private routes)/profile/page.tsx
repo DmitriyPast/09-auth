@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import { useAuthStore } from "@/lib/store/authStore";
+// import { useAuthStore } from "@/lib/store/authStore";
 import ProfilePageClient from "./ProfilePageClient";
 
 // const baseURL = 
 
 export default function ProfilePage() {
-    const { user } = useAuthStore()
+    // const { user } = useAuthStore()
     return (
-        user && <ProfilePageClient userData={user} />
+        <ProfilePageClient />
     )
 };
 
