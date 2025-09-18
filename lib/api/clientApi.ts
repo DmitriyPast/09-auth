@@ -30,7 +30,7 @@ export type CheckSessionRequest = {
 }
 
 export async function register(data: UserAuthRequest) {
-    return (await nextServer.post<User>('/auth/register', data)).data
+    return (await nextServer.post<User>('/auth/register', data))
 }
 
 export async function login(data: UserAuthRequest) {

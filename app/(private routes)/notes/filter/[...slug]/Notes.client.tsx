@@ -10,7 +10,7 @@ import Link from "next/link";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
-import { fetchNotes } from "@/lib/api/api";
+import { fetchNotes } from "@/lib/api/clientApi";
 import css from "./page.module.css";
 
 interface NotesClientProps {
@@ -24,8 +24,8 @@ interface NotesClientProps {
 }
 
 export default function NotesClient({ searchParams: { name, search, initPage, perPage, tag } }: NotesClientProps) {
-    const [page, setPage] = useState<number>(initPage);
-    const [query, setQuery] = useState<string>(search);
+    const [page, setPage] = useState<number>(1);
+    const [query, setQuery] = useState<string>('');
     // const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [queryDebounced] = useDebounce(query, 1000);
 
@@ -35,14 +35,14 @@ export default function NotesClient({ searchParams: { name, search, initPage, pe
         placeholderData: keepPreviousData,
         refetchOnMount: false
     });
-    const firstUpdate = useRef(true);
-    useEffect(() => {
-        if (!firstUpdate.current && isSuccess && !data?.notes.length)
-            toast("No notes found for your request.")
-        else firstUpdate.current = false;
-    }, [data, isSuccess]);
+    // const firstUpdate = useRef(true);
+    // useEffect(() => {
+    //     if (!firstUpdate.current && isSuccess && !data?.notes.length)
+    //         toast("No notes found for your request.")
+    //     else firstUpdate.current = false;
+    // }, [data, isSuccess]);
 
-    useEffect(() => setPage(1), [queryDebounced])
+    // useEffect(() => setPage(1), [queryDebounced])
     // const handleClose = () => setModalOpen(false);
 
     return (

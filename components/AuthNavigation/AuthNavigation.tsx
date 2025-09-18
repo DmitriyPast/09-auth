@@ -20,8 +20,7 @@ export default function AuthNavigation() {
         }
     };
     return (
-        // isAuth ? 
-        <>
+        isAuth ? <>
             <li className={css.navigationItem}>
                 <Link href="/profile" prefetch={false} className={css.navigationLink}>
                     Profile
@@ -34,8 +33,7 @@ export default function AuthNavigation() {
                     Logout
                 </button>
             </li>
-            {/* // </> : */}
-            {/* // <> */}
+        </> : <>
             <li className={css.navigationItem}>
                 <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
                     Login

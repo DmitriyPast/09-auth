@@ -15,52 +15,44 @@ const cookie = {
     }
 }
 
-export async function fetchNotes(
+export async function fetchNotesServer(
     search: string,
     page: number,
     perPage?: number,
     tag?: string// = "Todo"
 ) {
     return await nextServer.get<FetchNotesResponse>("/notes", {
-        params: {
-            search,
-            page,
-            perPage,
-            tag,
-        },
-
+        // params: {
+        //     search,
+        //     page,
+        //     perPage,
+        //     tag,
+        // },
+        headers: { Cookie: (await cookies()).toString() }
     });
 }
 
 export async function createNote(formData: NoteFormValues) {
     return await nextServer.post<Note>("/notes", formData, {
-        headers: {
-            Cookie: (await cookies()).toString()
-        }
+        headers: { Cookie: (await cookies()).toString() }
     });
 }
 
 export async function deleteNote(noteId: string) {
     return await nextServer.delete<Note>(`/notes/${noteId}`, {
-        headers: {
-            Cookie: (await cookies()).toString()
-        }
+        headers: { Cookie: (await cookies()).toString() }
     });
 }
 
 export async function getSingleNote(noteId: string) {
     return await nextServer.get<Note>(`/notes/${noteId}`, {
-        headers: {
-            Cookie: (await cookies()).toString()
-        }
+        headers: { Cookie: (await cookies()).toString() }
     });
 }
 
-export async function checkServerSession() {
+export async function checkSessionServer() {
     return await nextServer.get("/auth/session", {
-        headers: {
-            Cookie: (await cookies()).toString()
-        }
+        headers: { Cookie: (await cookies()).toString() }
     });
     // Повертаємо повний респонс, щоб middleware мав доступ до нових cookie
 };
