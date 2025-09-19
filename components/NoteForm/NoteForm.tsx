@@ -4,7 +4,7 @@ import { useId } from "react";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { NoteFormValues, NoteTag } from "../../types/note";
-import { createNote } from "@/lib/api/api";
+import { createNote } from "@/lib/api/clientApi";
 import css from "./NoteForm.module.css";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

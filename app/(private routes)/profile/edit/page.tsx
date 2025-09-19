@@ -4,7 +4,7 @@ import { useAuthStore } from "@/lib/store/authStore"
 import css from "./EditProfilePage.module.css"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { editUser } from "@/lib/api/clientApi"
+import { updateUser } from "@/lib/api/clientApi"
 import { ApiError } from "@/app/api/api"
 import { useState } from "react"
 import { User, UserAuthRequest } from "@/types/user"
@@ -23,7 +23,7 @@ export default function EditProfilePage() {
             const formValues = Object.fromEntries(formData) as { username: string };
             console.log(formValues);
             // Виконуємо запит
-            const res = await editUser(formValues);
+            const res = await updateUser(formValues);
             // Виконуємо редірект або відображаємо помилку
             if (res) {
                 setUser(res);

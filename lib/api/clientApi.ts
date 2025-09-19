@@ -30,7 +30,7 @@ export type CheckSessionRequest = {
 }
 
 export async function register(data: UserAuthRequest) {
-    return (await nextServer.post<User>('/auth/register', data))
+    return (await nextServer.post<User>('/auth/register', data)).data
 }
 
 export async function login(data: UserAuthRequest) {
@@ -38,22 +38,22 @@ export async function login(data: UserAuthRequest) {
 }
 
 export async function logout() {
-    return (await nextServer.post<User>('/auth/logout')).data
+    await nextServer.post('/auth/logout');
 }
 
-export async function refresh() {
-    return (await nextServer.get('/auth/refresh')).data
-}
+// export async function refresh() {
+//     return (await nextServer.get('/auth/refresh')).data
+// }
 
 export async function checkSession() {
-    return (await nextServer.post<CheckSessionRequest>('/auth/session')).data.success
+    return (await nextServer.get<CheckSessionRequest>('/auth/session')).data.success
 }
 
 export async function getUser(): Promise<User> {
     return (await nextServer.get('/users/me')).data;
 }
 
-export async function editUser(user: { username: string }): Promise<User> {
+export async function updateUser(user: { username: string }): Promise<User> {
     return (await nextServer.patch('/users/me', user)).data;
 }
 
@@ -81,7 +81,7 @@ export async function deleteNote(noteId: string) {
     return (await nextServer.delete<Note>(`/notes/${noteId}`)).data;
 }
 
-export async function getSingleNote(noteId: string) {
+export async function fetchNoteById(noteId: string) {
     return (await nextServer.get<Note>(`/notes/${noteId}`)).data;
 }
 

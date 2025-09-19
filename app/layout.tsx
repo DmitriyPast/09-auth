@@ -7,6 +7,7 @@ import ClientProvider from "@/components/TanStackProvider/TanStackProvider";
 import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -56,12 +57,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable}`}>
         <ClientProvider>
-          <Header />
-          <main>
-            {children}
-            {modal}
-          </main>
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <main>
+              {children}
+              {modal}
+            </main>
+            <Footer />
+          </AuthProvider>
           <ReactQueryDevtools />
         </ClientProvider>
         <Toaster />

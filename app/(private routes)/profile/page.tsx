@@ -1,14 +1,24 @@
 import { Metadata } from "next";
 // import { useAuthStore } from "@/lib/store/authStore";
 import ProfilePageClient from "./ProfilePageClient";
+import { getUserServer } from "@/lib/api/serverApi";
+import { redirect } from "next/navigation";
 
 // const baseURL = 
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
     // const { user } = useAuthStore()
-    return (
-        <ProfilePageClient />
-    )
+    try {
+        const user = await getUserServer();
+        if (!user) return redirect("/sign-in");
+
+        return <ProfilePageClient user={user} />;
+    } catch {
+        return redirect("/sign-in");
+    }
+    // return (
+    //     <ProfilePageClient />
+    // )
 };
 
 export const metadata: Metadata = {
@@ -17,7 +27,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Profile user",
         description: "View user Profile of user on NoteHub",
-        url: process.env.NEXT_PUBLIC_API_URL + '/profile',
+        url: '/profile',
         images: [{
             url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
             width: 1200,

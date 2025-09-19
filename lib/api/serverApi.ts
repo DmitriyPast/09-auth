@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Note, NoteFormValues, NoteTag } from "../../types/note";
 import { cookies } from "next/headers";
 import { nextServer } from "./api";
+import { User } from "@/types/user";
 
 export interface FetchNotesResponse {
     notes: Note[];
@@ -15,21 +16,24 @@ const cookie = {
     }
 }
 
+// Encountered Error: Note to the reader
+// ⨯ [RangeError: Maximum call stack size exceeded] { digest: '3313925883' } 
+// DO NOT EVER SEND FULL RESPONSE UNLESS HANDLED IN COMPONENT. ALWAYS RETURN (await {AxiosResponse}).data. It caues axios to recursively loop infinitely.
 export async function fetchNotesServer(
     search: string,
     page: number,
     perPage?: number,
     tag?: string// = "Todo"
 ) {
-    return await nextServer.get<FetchNotesResponse>("/notes", {
-        // params: {
-        //     search,
-        //     page,
-        //     perPage,
-        //     tag,
-        // },
+    return (await nextServer.get<FetchNotesResponse>("/notes", {
+        params: {
+            search,
+            page,
+            perPage,
+            tag,
+        },
         headers: { Cookie: (await cookies()).toString() }
-    });
+    })).data;
 }
 
 export async function createNote(formData: NoteFormValues) {
@@ -44,15 +48,31 @@ export async function deleteNote(noteId: string) {
     });
 }
 
-export async function getSingleNote(noteId: string) {
-    return await nextServer.get<Note>(`/notes/${noteId}`, {
+export async function fetchNoteById(noteId: string) {
+    return (await nextServer.get<Note>(`/notes/${noteId}`, {
         headers: { Cookie: (await cookies()).toString() }
-    });
+    })).data;
 }
 
+// export const checkSession = async () => {
+//     const cookieStore = await cookies();
+//     const { data } = await nextServer.get('/auth/session', {
+//         headers: {
+//             Cookie: cookieStore.toString(),
+//         },
+//     });
+//     return data.success;
+// };
+
 export async function checkSessionServer() {
-    return await nextServer.get("/auth/session", {
+    return (await nextServer.get("/auth/session", {
         headers: { Cookie: (await cookies()).toString() }
-    });
+    })).data.success;
     // Повертаємо повний респонс, щоб middleware мав доступ до нових cookie
 };
+
+export async function getUserServer(): Promise<User | null> {
+    return (await nextServer.get('/users/me', {
+        headers: { Cookie: (await cookies()).toString() }
+    })).data;
+}

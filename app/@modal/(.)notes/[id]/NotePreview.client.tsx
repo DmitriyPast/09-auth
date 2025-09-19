@@ -1,6 +1,6 @@
 "use client"
 
-import { getSingleNote } from '@/lib/api/api';
+import { fetchNoteById } from '@/lib/api/clientApi';
 import Modal from '@/components/Modal/Modal';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -14,7 +14,7 @@ export default function NotePreviewClient() {
     const router = useRouter();
     const { data: note, isLoading, error } = useQuery({
         queryKey: ['note', id],
-        queryFn: () => getSingleNote(id),
+        queryFn: () => fetchNoteById(id),
         refetchOnMount: false,
     });
     if (isLoading) return <Modal><p>is Loading...</p></Modal>;

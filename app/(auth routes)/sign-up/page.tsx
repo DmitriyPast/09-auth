@@ -13,27 +13,27 @@ export default function SignUpPage() {
     const setUser = useAuthStore((state) => state.setUser)
 
     const handleSubmit = async (formData: FormData) => {
-        // try {
-        // Типізуємо дані форми
-        console.log(formData);
-        const formValues = Object.fromEntries(formData) as UserAuthRequest;
-        console.log(formValues);
-        // Виконуємо запит
-        const res = await register(formValues);
-        // Виконуємо редірект або відображаємо помилку
-        if (res) {
-            setUser(res);
-            // router.push("/profile");
-        } else {
-            setError("Invalid email or password");
+        try {
+            // Типізуємо дані форми
+            console.log(formData);
+            const formValues = Object.fromEntries(formData) as UserAuthRequest;
+            console.log(formValues);
+            // Виконуємо запит
+            const res = await register(formValues);
+            // Виконуємо редірект або відображаємо помилку
+            if (res) {
+                setUser(res);
+                router.push("/profile");
+            } else {
+                setError("Invalid email or password");
+            }
+        } catch (err) {
+            const error = (err as ApiError).response?.data
+            setError(`${error?.error}${error?.response?.message ? `: ` : ''}${error?.response.message}`
+                // :  ??
+                //     (error?.response.message && error?.error) ?? `
+            );
         }
-        // } catch (error) {
-        // setError(
-        //     (error as ApiError).response?.data?.error ??
-        //     (error as ApiError).message ??
-        //     "Oops... some error"
-        // );
-        // }
     };
 
     return (
@@ -56,7 +56,7 @@ export default function SignUpPage() {
                     </button>
                 </div>
 
-                <p className={css.error}>{error}</p>
+                <p className={css.error}>{error ?? "Oops... some error"}</p>
             </form>
         </main>
 
