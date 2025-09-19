@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 
 type AuthStore = {
-    isAuth: boolean,
+    isAuthenticated: boolean,
     user: User | null,
     setUser: (user: User) => void,
     clearAuth: () => void
@@ -14,17 +14,17 @@ type AuthStore = {
 export const useAuthStore = create<AuthStore>()(
     persist(
         (set) => ({
-            isAuth: false,
+            isAuthenticated: false,
             user: null,
-            setUser: (user: User) => set({ user, isAuth: true }),
-            clearAuth: () => set({ isAuth: false, user: null })
+            setUser: (user: User) => set({ user, isAuthenticated: true }),
+            clearAuth: () => set({ isAuthenticated: false, user: null })
         })
         ,
         {
             name: "auth-store",
             partialize: (state) => ({
                 user: state.user,
-                isAuth: state.isAuth,
+                isAuthenticated: state.isAuthenticated,
             }),
         }
     )

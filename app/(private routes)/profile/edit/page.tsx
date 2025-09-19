@@ -11,7 +11,7 @@ import { User, UserAuthRequest } from "@/types/user"
 
 
 export default function EditProfilePage() {
-    const { isAuth, user, setUser } = useAuthStore()
+    const { isAuthenticated, user, setUser } = useAuthStore()
     const [error, setError] = useState("");
     const router = useRouter()
 

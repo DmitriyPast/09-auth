@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
     // const setUser = useAuthStore((state) => state.setUser);
-    // const clearIsAuthenticated = useAuthStore((state) => state.clearAuth);
+    // const clearisAuthenticatedenticated = useAuthStore((state) => state.clearAuth);
     const { setUser, clearAuth } = useAuthStore()
     const [loading, setLoading] = useState(true);
     const router = useRouter()
@@ -17,8 +17,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         const fetchUser = async () => {
             try {
                 // Перевіряємо сесію
-                const isAuthenticated = await checkSession();
-                if (isAuthenticated) {
+                const isAuthenticatedenticated = await checkSession();
+                if (isAuthenticatedenticated) {
                     // Якщо сесія валідна — отримуємо користувача
                     const user = await getUser();
                     if (user) setUser(user);

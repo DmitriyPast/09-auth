@@ -65,9 +65,9 @@ export async function fetchNoteById(noteId: string) {
 // };
 
 export async function checkSessionServer() {
-    return (await nextServer.get("/auth/session", {
+    return await nextServer.get("/auth/session", {
         headers: { Cookie: (await cookies()).toString() }
-    })).data.success;
+    });
     // Повертаємо повний респонс, щоб middleware мав доступ до нових cookie
 };
 

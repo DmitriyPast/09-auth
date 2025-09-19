@@ -8,8 +8,8 @@ import { useRouter } from 'next/navigation';
 export default function AuthNavigation() {
 
     const router = useRouter();
-    const { isAuth, user, clearAuth } = useAuthStore()
-    console.log(isAuth);
+    const { isAuthenticated, user, clearAuth } = useAuthStore()
+    console.log(isAuthenticated);
     const handleLogout = async () => {
         try {
             await fetch("/api/auth/logout", { method: "POST" });
@@ -20,7 +20,7 @@ export default function AuthNavigation() {
         }
     };
     return (
-        isAuth ? <>
+        isAuthenticated ? <>
             <li className={css.navigationItem}>
                 <Link href="/profile" prefetch={false} className={css.navigationLink}>
                     Profile
