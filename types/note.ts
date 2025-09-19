@@ -1,5 +1,3 @@
-
-
 export interface Note {
   id: string;
   title: string;
@@ -9,7 +7,12 @@ export interface Note {
   tag: NoteTag;
 }
 
-export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+export const TAGS = [
+  "All", "Todo", "Work", "Personal", "Meeting", "Shopping", "Ideas", "Travel", "Finance", "Health", "Important"] as const;
+export type NoteTag = typeof TAGS[number];
+// export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+
+const fucktag: NoteTag = "Work"
 
 export interface NoteFormValues {
   title: string;

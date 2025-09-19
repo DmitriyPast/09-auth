@@ -6,15 +6,16 @@
 // import { TAGS } from '@/components/TagsMenu/TagsMenu'
 import Link from 'next/link'
 import css from './page.module.css'
+import { TAGS } from '@/types/note'
 
-export const TAGS = [
-    "All",
-    "Work",
-    "Personal",
-    "Todo",
-    "Meeting",
-    "Shopping",
-]
+// export const TAGS = [
+//     "All",
+//     "Work",
+//     "Personal",
+//     "Todo",
+//     "Meeting",
+//     "Shopping",
+// ]
 
 export default function Sidebar() {
     return (

@@ -3,15 +3,16 @@
 import { useState } from "react";
 import css from "./TagsMenu.module.css";
 import Link from "next/link";
+import { TAGS } from "@/types/note";
 
-export const TAGS = [
-    "All",
-    "Work",
-    "Personal",
-    "Todo",
-    "Meeting",
-    "Shopping",
-]
+// export const TAGS = [
+//     "All",
+//     "Work",
+//     "Personal",
+//     "Todo",
+//     "Meeting",
+//     "Shopping",
+// ]
 
 export default function TagsMenu() {
     const [toggle, setToggle] = useState<boolean>(false)

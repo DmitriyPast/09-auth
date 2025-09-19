@@ -3,7 +3,7 @@
 import { useId } from "react";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { NoteFormValues, NoteTag } from "../../types/note";
+import { TAGS, type NoteFormValues, type NoteTag } from "../../types/note";
 import { createNote } from "@/lib/api/clientApi";
 import css from "./NoteForm.module.css";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ export default function NoteForm() {
       .required("Title is required."),
     content: Yup.string().max(500, "YOUR content IS TOO LONG!"),
     tag: Yup.string()
-      .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"])
+      .oneOf(TAGS)
       .required("Tag is required."),
   });
 
@@ -112,11 +112,12 @@ export default function NoteForm() {
           defaultValue={draft.tag}
           onChange={handleChange} required
         >
-          <option value="Todo">Todo</option>
+          {TAGS.map((tag) => tag !== "All" && <option key={tag} value={tag}>{tag}</option>)}
+          {/* <option value="Todo">Todo</option>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
           <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
+          <option value="Shopping">Shopping</option> */}
         </select>
       </div>
 
